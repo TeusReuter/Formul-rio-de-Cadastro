@@ -1,18 +1,25 @@
 import { TextField, Button } from "@material-ui/core";
 import React, { useState } from "react";
 
+
 function DadosGerais({ aoEnviar }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
-  const [cpf, setCpf] = useState("");
+  const [nomeUsuario, setNomeUsuario] = useState("");
+  
+  
+  
+  console.log(nome, sobrenome, nomeUsuario);
+  
 
-  console.log(nome, sobrenome, cpf);
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        aoEnviar({ nome, sobrenome, cpf });
+        
+          aoEnviar({nome, sobrenome, nomeUsuario})
+        
       }}
     >
       <TextField
@@ -41,14 +48,14 @@ function DadosGerais({ aoEnviar }) {
         fullWidth
       />
 
-      <TextField
-        value={cpf}
+<TextField
+        value={nomeUsuario}
         onChange={(event) => {
-          setCpf(event.target.value);
+          setNomeUsuario(event.target.value);
         }}
-        id="cpf"
-        label="CPF"
-        name="cpf"
+        id="nomeUsuario"
+        label="Nome de Usuario"
+        name="nomeUsuario"
         variant="outlined"
         margin="normal"
         fullWidth

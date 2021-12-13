@@ -1,17 +1,25 @@
 import { Button, TextField } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import useErros from "../../hooks/useErros";
+import ValidacoesCadastro from "../../contexts/ValidacoesCadastro";
+
+
 
 function DadosConclusao({ aoEnviar }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [nomeUsuario, setNomeUsuario] = useState("");
-
+  const [cpf, setCpf] = useState("");
+  const validacoes = useContext(ValidacoesCadastro);
+  const [erros, validarCampos, possoEnviar] = useErros(validacoes);
+  
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        aoEnviar({ email, senha, nomeUsuario });
+        if (possoEnviar()) {
+          aoEnviar({ email, senha, cpf });
+        }
       }}
     >
       <TextField
@@ -34,6 +42,9 @@ function DadosConclusao({ aoEnviar }) {
         onChange={(event) => {
           setSenha(event.target.value);
         }}
+        onBlur={validarCampos}
+        error={!erros.senha.valido}
+        helperText={erros.senha.texto}
         id="senha"
         label="Senha"
         name="senha"
@@ -45,15 +56,19 @@ function DadosConclusao({ aoEnviar }) {
       />
 
       <TextField
-        value={nomeUsuario}
+        value={cpf}
         onChange={(event) => {
-          setNomeUsuario(event.target.value);
+          setCpf(event.target.value);
         }}
-        id="nomeUsuario"
-        label="Nome de Usuario"
-        name="nomeUsuario"
+        onBlur={validarCampos}
+        error={!erros.cpf.valido}
+        helperText={erros.cpf.texto}
+        id="cpf"
+        label="CPF"
+        name="cpf"
         variant="outlined"
         margin="normal"
+        required
         fullWidth
       />
 

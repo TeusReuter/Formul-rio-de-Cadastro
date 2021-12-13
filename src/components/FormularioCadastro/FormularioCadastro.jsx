@@ -1,9 +1,10 @@
 import { Step, StepLabel, Stepper, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
+import { validarSenha } from "../../models/cadastroCPF";
 import DadosConclusao from "./DadosConclusao";
 import DadosGerais from "./DadosGerais";
 
-function FormularioCadastro({ aoEnviar }) {
+function FormularioCadastro({ aoEnviar, validarCPF }) {
   const [etapaAtual, setEtapaAtual] = useState(0);
   const [dadosColetados, setDados] = useState({});
 
@@ -15,7 +16,7 @@ function FormularioCadastro({ aoEnviar }) {
 
   const formularios = [
     <DadosGerais aoEnviar={coletarDados} />,
-    <DadosConclusao aoEnviar={coletarDados} />,
+    <DadosConclusao aoEnviar={coletarDados} validarCPF={validarCPF} validarSenha={validarSenha} />,
     <Typography variant="h4">Cadastro concluído com sucesso!</Typography>,
   ];
 
@@ -27,6 +28,8 @@ function FormularioCadastro({ aoEnviar }) {
   function proximo() {
     setEtapaAtual(etapaAtual + 1);
   }
+
+  
 
   return (
     <>
